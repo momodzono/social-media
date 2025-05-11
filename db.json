@@ -1,0 +1,85 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "admin@example.com",
+      "password": "admin123",
+      "name": "Admin User",
+      "role": "admin"
+    },
+    {
+      "id": 2,
+      "email": "user@example.com",
+      "password": "user123",
+      "name": "Regular User",
+      "role": "user"
+    },
+    {
+      "id": 3,
+      "email": "test@example.com",
+      "password": "test123",
+      "name": "Test User",
+      "role": "user"
+    }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "title": "Первый пост",
+      "body": "Содержание первого поста",
+      "userId": 1,
+      "createdAt": "2023-10-15T10:30:00.000Z"
+    },
+    {
+      "id": 2,
+      "title": "Второй пост",
+      "body": "Содержание второго поста",
+      "userId": 2,
+      "createdAt": "2023-10-16T14:45:00.000Z"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "Отличный пост!",
+      "postId": 1,
+      "userId": 2,
+      "createdAt": "2023-10-15T11:20:00.000Z"
+    },
+    {
+      "id": 2,
+      "body": "Спасибо за информацию",
+      "postId": 1,
+      "userId": 3,
+      "createdAt": "2023-10-15T12:15:00.000Z"
+    }
+  ],
+  "profiles": [
+    {
+      "id": 1,
+      "userId": 1,
+      "bio": "Администратор сайта",
+      "avatar": "https://randomuser.me/api/portraits/men/1.jpg"
+    },
+    {
+      "id": 2,
+      "userId": 2,
+      "bio": "Обычный пользователь",
+      "avatar": "https://randomuser.me/api/portraits/women/2.jpg"
+    }
+  ],
+  "likes": [
+    {
+      "id": 1,
+      "postId": 1,
+      "userId": 2,
+      "createdAt": "2023-10-15T11:25:00.000Z"
+    },
+    {
+      "id": 2,
+      "postId": 1,
+      "userId": 3,
+      "createdAt": "2023-10-15T13:10:00.000Z"
+    }
+  ]
+}
