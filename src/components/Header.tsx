@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { Layout, Menu, Button, Avatar, Dropdown } from "antd";
+import { Layout, Menu, Button, Avatar, Dropdown, Skeleton } from "antd";
 import {
   UserOutlined,
   LogoutOutlined,
@@ -7,40 +6,46 @@ import {
   InfoCircleOutlined,
 } from "@ant-design/icons";
 import { Link, useNavigate, useLocation } from "react-router";
+import { api } from "../store/api";
+import {
+  useAppDispatch,
+  useAppSelector,
+  type ExtraArgument,
+} from "../store/reducer";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 const { Header: AntHeader } = Layout;
 
-interface User {
-  id: number;
-  name: string;
-  username?: string;
-}
+export const logOut = createAsyncThunk<unknown, void>(
+  "auth/logut",
+  async (_, { dispatch, rejectWithValue, extra }) => {
+    const { router } = extra as ExtraArgument;
+
+    try {
+      await dispatch(api.endpoints.logout.initiate()).unwrap();
+      dispatch(api.util.resetApiState());
+
+      router.navigate("/login");
+    } catch (error) {
+      console.error("Login error:", error);
+      return rejectWithValue("Неверный email или пароль");
+    }
+  },
+);
 
 export default function Header() {
-  const [user, setUser] = useState<User | null>(null);
+  const { data: user } = useAppSelector(api.endpoints.getMe.select({}));
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    // Проверяем, есть ли сохраненные данные пользователя
-    const userData = localStorage.getItem("user");
-    if (userData) {
-      try {
-        setUser(JSON.parse(userData));
-      } catch (e) {
-        console.error("Failed to parse user data", e);
-      }
-    }
-  }, []);
+  // Добавляем обработку состояния загрузки
+  const { data: profileData, isLoading: isProfileLoading } =
+    api.useGetProfileQuery({});
+  const profile = profileData?.profile;
 
   const handleLogout = () => {
-    // Удаляем данные пользователя и токен
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setUser(null);
-
-    // Перенаправляем на страницу логина
-    navigate("/login");
+    dispatch(logOut());
   };
 
   // Определяем активный ключ меню на основе текущего пути
@@ -49,6 +54,7 @@ export default function Header() {
     if (path === "/") return ["home"];
     if (path === "/about") return ["about"];
     if (path === "/login") return ["login"];
+    if (path === "/profile") return ["profile"];
     return [];
   };
 
@@ -112,8 +118,16 @@ export default function Header() {
                 alignItems: "center",
               }}
             >
-              <Avatar icon={<UserOutlined />} />
-              <span style={{ marginLeft: 8 }}>{user.name}</span>
+              {isProfileLoading ? (
+                <Skeleton.Avatar active size="small" />
+              ) : (
+                <>
+                  <Avatar src={profile?.photo} icon={<UserOutlined />} />
+                  <span style={{ marginLeft: 8 }}>
+                    {profile?.name || user.email}
+                  </span>
+                </>
+              )}
             </div>
           </Dropdown>
         ) : (

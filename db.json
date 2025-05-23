@@ -4,38 +4,126 @@
       "id": 1,
       "email": "admin@example.com",
       "password": "admin123",
-      "name": "Admin User",
+      "name": "Admin",
       "role": "admin"
     },
     {
       "id": 2,
       "email": "user@example.com",
       "password": "user123",
-      "name": "Regular User",
+      "name": "User1",
       "role": "user"
     },
     {
       "id": 3,
       "email": "test@example.com",
       "password": "test123",
-      "name": "Test User",
+      "name": "User2",
       "role": "user"
+    },
+    {
+      "id": 1747237907747,
+      "email": "qwerty@gmail.com",
+      "password": "zxcvbn",
+      "name": "qwertyuio",
+      "role": "user",
+      "createdAt": "2025-05-14T15:51:47.747Z"
+    },
+    {
+      "id": 1747314019367,
+      "email": "yah2005@mail.ru",
+      "password": "qazqaz",
+      "name": "w",
+      "role": "user",
+      "createdAt": "2025-05-15T13:00:19.367Z"
+    },
+    {
+      "id": 222,
+      "email": "artem@mail.ru",
+      "password": "123456",
+      "name": "w",
+      "role": "user",
+      "createdAt": "2025-05-15T13:00:19.367Z"
+    },
+    {
+      "id": 1747985860480,
+      "email": "yah2004@mail.ru",
+      "password": "123456",
+      "name": "qwer",
+      "role": "user",
+      "createdAt": "2025-05-23T07:37:40.480Z"
+    },
+    {
+      "id": 1747986009001,
+      "email": "yah@mail.ru",
+      "password": "123456",
+      "role": "user",
+      "createdAt": "2025-05-23T07:40:09.001Z"
     }
   ],
   "posts": [
     {
       "id": 1,
-      "title": "Первый пост",
       "body": "Содержание первого поста",
       "userId": 1,
-      "createdAt": "2023-10-15T10:30:00.000Z"
+      "createdAt": "2023-10-15T10:30:00.000Z",
+      "likes": null
     },
     {
-      "id": 2,
-      "title": "Второй пост",
-      "body": "Содержание второго поста",
-      "userId": 2,
-      "createdAt": "2023-10-16T14:45:00.000Z"
+      "id": 1747317406511,
+      "body": "qwerty",
+      "userId": 1,
+      "createdAt": "2025-05-15T13:56:46.511Z",
+      "likes": null
+    },
+    {
+      "id": 1747321101534,
+      "body": "Господи, получилось",
+      "userId": 1747237907747,
+      "createdAt": "2025-05-15T14:58:21.534Z",
+      "likes": null
+    },
+    {
+      "id": 1748010006774,
+      "body": "vjhvj",
+      "userId": 1,
+      "createdAt": "2025-05-23T14:20:06.774Z",
+      "likes": null
+    },
+    {
+      "id": 1748020330425,
+      "body": "z lox",
+      "userId": 222,
+      "createdAt": "2025-05-23T17:12:10.425Z",
+      "likes": null
+    },
+    {
+      "id": 1748020348330,
+      "body": "ia krytaia",
+      "userId": 222,
+      "createdAt": "2025-05-23T17:12:28.330Z",
+      "likes": null
+    },
+    {
+      "id": 1748020775495,
+      "body": "loxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "userId": 222,
+      "createdAt": "2025-05-23T17:19:35.495Z",
+      "likes": null
+    },
+    {
+      "id": 1748020829874,
+      "body": "1231123123123123312123213123112312312312331212321312311231231231233121232131231123123123123312123213123112312312312331212321312311231231231233121232131231123123123123312123213123112312312312331212321312311231231231233121232131231123123123123312123213123112312312312331212321312311231231231233121232131231123123123123312123213123112312312312331212321312311231231231233121232131231123123123123312123213",
+      "userId": 222,
+      "createdAt": "2025-05-23T17:20:29.874Z",
+      "likes": null
+    },
+    {
+      "id": 1748021217804,
+      "body": " safs sf sa gssdredn 4er safs sf sa gssdredn 4er safs sf sa gssdredn 4er safs sf sa gssdredn 4er safs sf sa gssdredn 4er safs sf sa gssdredn 4er safs sf sa gssdredn 4er safs sf sa gssdredn 4er safs sf sa gssdredn 4er safs sf sa gssdredn 4er safs sf sa gssdredn 4er safs sf sa gssdredn 4er safs sf sa gssdredn 4er safs sf sa gssdredn 4er safs sf sa gssdredn 4er safs sf sa gssdredn 4er",
+      "userId": 222,
+      "createdAt": "2025-05-23T17:26:57.804Z",
+      "likes": null
     }
   ],
   "comments": [
@@ -66,20 +154,73 @@
       "userId": 2,
       "bio": "Обычный пользователь",
       "avatar": "https://randomuser.me/api/portraits/women/2.jpg"
+    },
+    {
+      "id": 1748001418287,
+      "name": "qwert",
+      "birthday": "Wed Feb 09 2000 00:00:00 GMT+0300 (Москва, стандартное время)",
+      "description": "12312312",
+      "photo": null,
+      "userId": 1747237907747,
+      "createdAt": "2025-05-23T11:56:58.287Z"
+    },
+    {
+      "id": 1748001855619,
+      "name": "artem",
+      "birthday": "Mon Jan 07 2002 00:00:00 GMT+0300 (Москва, стандартное время)",
+      "description": "3123123",
+      "photo": "http://localhost:3001/files/1748022891438-367526741.jpg",
+      "userId": 222,
+      "createdAt": "2025-05-23T12:04:15.619Z",
+      "updateAt": "2025-05-23T17:54:51.443Z",
+      "file": "1748020268847-555115744.jpg"
+    },
+    {
+      "id": 1748011683616,
+      "name": "dtugdcul,j",
+      "birthday": "Mon Apr 09 1990 00:00:00 GMT+0400 (Москва, летнее время)",
+      "description": "",
+      "photo": "http://localhost:3001/files/1748011683612-548858350.jpg",
+      "userId": 1747986009001,
+      "createdAt": "2025-05-23T14:48:03.616Z"
     }
   ],
   "likes": [
     {
-      "id": 1,
+      "id": 1748009875099,
       "postId": 1,
-      "userId": 2,
-      "createdAt": "2023-10-15T11:25:00.000Z"
+      "userId": 222,
+      "createdAt": "2025-05-23T14:17:55.099Z"
     },
     {
-      "id": 2,
-      "postId": 1,
-      "userId": 3,
-      "createdAt": "2023-10-15T13:10:00.000Z"
+      "id": 1748009876581,
+      "postId": 1747317406511,
+      "userId": 222,
+      "createdAt": "2025-05-23T14:17:56.581Z"
+    },
+    {
+      "id": 1748010673785,
+      "postId": 1747321101534,
+      "userId": 1,
+      "createdAt": "2025-05-23T14:31:13.785Z"
+    },
+    {
+      "id": 1748020333416,
+      "postId": 1748020330425,
+      "userId": 222,
+      "createdAt": "2025-05-23T17:12:13.416Z"
+    },
+    {
+      "id": 1748021256737,
+      "postId": 1748020348330,
+      "userId": 222,
+      "createdAt": "2025-05-23T17:27:36.737Z"
+    },
+    {
+      "id": 1748021289441,
+      "postId": 1747321101534,
+      "userId": 222,
+      "createdAt": "2025-05-23T17:28:09.441Z"
     }
   ]
 }

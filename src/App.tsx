@@ -1,18 +1,15 @@
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router";
+import { RouterProvider, Outlet } from "react-router";
 import { Layout } from "antd";
 import "./App.css";
-import Login from "./pages/Login";
-import Home from "./pages/Home";
 import Header from "./components/Header";
+import { Provider } from "react-redux";
+import { store } from "./app/store";
+import { router } from "./app/router";
 
 const { Content, Footer } = Layout;
 
-// Pages
-const About = () => <h1>About Page</h1>;
-const NotFound = () => <h1>404 - Page Not Found</h1>;
-
 // Layout component with header
-const AppLayout = () => {
+export const AppLayout = () => {
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Header />
@@ -21,42 +18,17 @@ const AppLayout = () => {
           <Outlet />
         </div>
       </Content>
-      <Footer style={{ textAlign: "center" }}>
-        Социальная сеть ©{new Date().getFullYear()} Создано с использованием
-        React и Ant Design
-      </Footer>
+      <Footer style={{ textAlign: "center" }}>Социальная сеть</Footer>
     </Layout>
   );
 };
 
-// Create router configuration
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <AppLayout />,
-    children: [
-      {
-        index: true,
-        element: <Home />,
-      },
-      {
-        path: "about",
-        element: <About />,
-      },
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "*",
-        element: <NotFound />,
-      },
-    ],
-  },
-]);
-
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+  );
 }
 
 export default App;

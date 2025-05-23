@@ -2,88 +2,75 @@ import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Input, Button, Typography, Alert, Space, Spin } from "antd";
+import { Input, Button, Typography, Alert, Space } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { api } from "../store/api";
+import { useNavigate } from "react-router";
+import { httpClient } from "../core/http";
 
 const { Title } = Typography;
 
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import type { ExtraArgument } from "../store/reducer";
-import { useAppDispatch } from "../store/reducer";
-
-export const loginUser = createAsyncThunk<
-  unknown,
-  {
-    email: string;
-    password: string;
-  }
->("auth/login", async (credentials, { dispatch, rejectWithValue, extra }) => {
-  const { router } = extra as ExtraArgument;
-  try {
-    await dispatch(api.endpoints.login.initiate(credentials)).unwrap();
-
-    try {
-      await dispatch(api.endpoints.getProfile.initiate({})).unwrap();
-    } catch {
-      router.navigate("/userprofile");
-      return rejectWithValue("Не заполненный профиль");
-    }
-
-    router.navigate("/");
-  } catch (error) {
-    console.error("Login error:", error);
-    return rejectWithValue("Неверный email или пароль");
-  }
-});
-
-// Создаем схему валидации с помощью Zod
-const loginSchema = z.object({
+const registerSchema = z.object({
   email: z.string().email("Введите корректный email"),
   password: z.string().min(6, "Пароль должен содержать минимум 6 символов"),
 });
 
-// Тип данных формы на основе схемы
-type LoginFormData = z.infer<typeof loginSchema>;
+type RegisterFormData = z.infer<typeof registerSchema>;
 
-export default function Login() {
-  const [loginError, setLoginError] = useState<string | null>(null);
-  const dispatch = useAppDispatch();
-  const isLoading = false;
+export default function Register() {
+  const [registerError, setRegisterError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
+  } = useForm<RegisterFormData>({
+    resolver: zodResolver(registerSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = async (data: LoginFormData) => {
-    setLoginError(null);
+  const onSubmit = async (data: RegisterFormData) => {
+    setLoading(true);
+    setRegisterError(null);
 
-    dispatch(loginUser(data)).catch(setLoginError);
+    try {
+      const response = await httpClient("http://localhost:3001/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const responseData = await response.json();
+
+      if (response.ok) {
+        console.log("Успешная регистрация:", responseData);
+        navigate("/login");
+      } else {
+        setRegisterError("Ошибка при регистрации");
+      }
+    } catch (error) {
+      console.error("Register error:", error);
+      setRegisterError("Произошла ошибка при попытке регистрации");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div style={{ maxWidth: 400, margin: "0 auto", padding: "2rem 1rem" }}>
       <Space direction="vertical" size="large" style={{ width: "100%" }}>
         <Title level={2} style={{ textAlign: "center", margin: 0 }}>
-          Вход в систему
+          Регистрация
         </Title>
 
-        {loginError && (
-          <Alert
-            message={loginError}
-            type="error"
-            showIcon
-            closable
-            onClose={() => setLoginError(null)}
-          />
+        {registerError && (
+          <Alert message={registerError} type="error" showIcon closable />
         )}
 
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -99,7 +86,6 @@ export default function Login() {
                     placeholder="your.email@example.com"
                     size="large"
                     status={errors.email ? "error" : undefined}
-                    disabled={isLoading}
                   />
                   {errors.email && (
                     <div style={{ color: "#ff4d4f", marginTop: 4 }}>
@@ -121,7 +107,6 @@ export default function Login() {
                     placeholder="Введите пароль"
                     size="large"
                     status={errors.password ? "error" : undefined}
-                    disabled={isLoading}
                   />
                   {errors.password && (
                     <div style={{ color: "#ff4d4f", marginTop: 4 }}>
@@ -137,17 +122,13 @@ export default function Login() {
               htmlType="submit"
               size="large"
               block
-              loading={isLoading}
-              icon={isLoading ? <Spin size="small" /> : null}
+              loading={loading}
             >
-              {isLoading ? "Вход..." : "Войти"}
+              Зарегистрироваться
             </Button>
           </Space>
         </form>
-
-        <div>
-          Нет аккаунта? <a href="/register">Зарегистрироваться</a>
-        </div>
+        <a href="/login">Уже есть аакаунт</a>
       </Space>
     </div>
   );
